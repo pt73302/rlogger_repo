@@ -1,0 +1,35 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.1'
+    }
+
+}
+
+project.ext {
+    //Common settings for all builds
+    //Note that Android Studio does not know about the 'ext' module and will warn
+    //Some settings may differ for 'froyo' release
+    //minSdkVersion differs between modules
+    buildToolsVersion = '25.0.2' //Update Travis manually
+    compileSdkVersion = 25 //Update Travis manually
+    targetSdkVersion = 25
+
+    supportLibrary = '25.2.0'
+    //googlePlayServicesVersion = '9.6.0'
+    googlePlayServicesVersion = '10.2.0'
+    googleWearVersion = '2.0.0'
+
+    junitVersion = '4.12'
+    mockitoVersion = '2.3.7'
+
+    versionName = '1.57'
+    versionCode = 14000057
+    froyoVersionCode = 8000057
+
+    travisBuild = System.getenv("TRAVIS") == "true"
+    // allows for -Dpre-dex=false to be set
+    preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
+}
