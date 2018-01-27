@@ -63,6 +63,11 @@ public class TrackerGPS extends DefaultTrackerComponent implements TickListener 
 
     @Override
     public ResultCode onInit(final Callback callback, Context context) {
+
+
+        //arek: remove for test, do not use Location Manager.
+        // It always reutn OK.
+        /*
         try {
             LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             if (lm == null) {
@@ -74,11 +79,18 @@ public class TrackerGPS extends DefaultTrackerComponent implements TickListener 
         } catch (Exception ex) {
             return ResultCode.RESULT_ERROR;
         }
+        */
+
         return ResultCode.RESULT_OK;
     }
 
     @Override
     public ResultCode onConnecting(final Callback callback, Context context) {
+
+
+        //arek: remove for test,
+
+        /*
         if (ContextCompat.checkSelfPermission(this.tracker,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -126,16 +138,63 @@ public class TrackerGPS extends DefaultTrackerComponent implements TickListener 
         } catch (Exception ex) {
             return ResultCode.RESULT_ERROR;
         }
+        */
+
+
+        //arek: add it temporary for test.
+        // Set mLastLocation we will use further.
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        //05-16 16:09:30.227: D/location.getTime()(1279): 1368590417000
+        //mLastLocation.setTime(1368590417000);
+        mLastLocation.setTime(System.currentTimeMillis());
+
+        // https://stackoverflow.com/questions/21382230/how-to-format-gps-latitude-and-longitude
+        // In android(java) when you get the current latitude and longitude using
+        // the function getlatitude() etc you get the coordinates in decimal format:
+        // latitude: 24.3454523 longitude: 10.123450
+        mLastLocation.setLatitude(24.3454523);
+
+        // Set the speed, in meters/second over ground.
+        mLastLocation.setSpeed(4);
+
+        // Set the altitude, in meters above the WGS 84 reference ellipsoid.
+        mLastLocation.setAltitude(10);
+
+        // Set the estimated horizontal accuracy of this location, meters.
+        mLastLocation.setAccuracy(2);
+
+        // Set the bearing, in degrees.
+        // Bearing is the horizontal direction of travel of this device, and is not related to the device orientation.
+        // The input will be wrapped into the range (0.0, 360.0].
+        mLastLocation.setBearing(0);
+
+        frequency_ms = Integer.valueOf(preferences.getString(context.getString(
+                R.string.pref_pollInterval), "500"));
+
+        return ResultCode.RESULT_OK;
+
+
     }
 
     @Override
     public boolean isConnected() {
+
+        //arek: remove for test
+        /*
         return (mWithoutGps) ||
                 (mGpsStatus != null) && mGpsStatus.isFixed();
+        */
+
+        //arek test
+        return true;
     }
 
     @Override
     public ResultCode onEnd(Callback callback, Context context) {
+
+        //arek: remove for test
+        /*
         if (!mWithoutGps) {
             LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             try {
@@ -152,9 +211,14 @@ public class TrackerGPS extends DefaultTrackerComponent implements TickListener 
             mGpsStatus = null;
             mConnectCallback = null;
         }
+        */
+
         return ResultCode.RESULT_OK;
     }
 
+
+    //arek: removed for test
+    /*
     private final Runnable gpsLessLocationProvider = new Runnable() {
 
         Location location = null;
@@ -171,22 +235,26 @@ public class TrackerGPS extends DefaultTrackerComponent implements TickListener 
                 case INIT:
                 case CLEANUP:
                 case ERROR:
-                    /* end loop be returning directly here */
+                    // end loop be returning directly here
                     return;
                 case INITIALIZING:
                 case INITIALIZED:
                 case STARTED:
                 case PAUSED:
-                    /* continue looping */
+                    // continue looping
                     break;
             }
             tracker.onLocationChanged(location);
             handler.postDelayed(this, frequency_ms);
         }
     };
+    */
 
     @Override
     public void onTick() {
+
+        //arek: remove for test
+        /*
         if (mGpsStatus == null)
             return;
 
@@ -203,5 +271,7 @@ public class TrackerGPS extends DefaultTrackerComponent implements TickListener 
         //note: Don't reset mGpsStatus, it's used for isConnected()
 
         tmp.run(this, ResultCode.RESULT_OK);
+        */
+
     }
 }

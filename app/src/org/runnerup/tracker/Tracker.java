@@ -634,21 +634,45 @@ public class Tracker extends android.app.Service implements
     }
 
     public long getTime() {
+
+        //arek: default val for test
+        //mElapsedTimeMillis = 1000000;
+
         return mElapsedTimeMillis / 1000;
     }
 
     public double getDistance() {
+
+        //arek: default val for test
+        //mElapsedDistance = 10;
+
         return mElapsedDistance;
     }
 
     public Location getLastKnownLocation() {
+
+        //arek: default val for test
+        /*
+        mLastLocation.setTime(System.currentTimeMillis());
+        mLastLocation.setLatitude(24.3454523);
+        mLastLocation.setSpeed(4);
+        mLastLocation.setAltitude(10);
+        mLastLocation.setAccuracy(2);
+        mLastLocation.setBearing(0);
+        */
+
         return mLastLocation;
     }
 
     public long getActivityId() {
+
+        //arek: set default ?
+
         return mActivityId;
     }
 
+    //arek: This is LocationListener interface, from LocationManager service.
+    // This is the first step when you could debug for test, replace all things with constant.
     @Override
     public void onLocationChanged(Location arg0) {
         //Elevation depends on GPS updates
@@ -656,6 +680,7 @@ public class Tracker extends android.app.Service implements
         onLocationChangedImpl(arg0, false);
     }
 
+    //arek: This is a place where data from gps are received.
     private void onLocationChangedImpl(Location arg0, boolean internal) {
         long now = System.currentTimeMillis();
         if (!mBug23937Checked) {

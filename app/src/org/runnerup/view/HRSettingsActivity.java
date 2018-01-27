@@ -172,6 +172,7 @@ public class HRSettingsActivity extends AppCompatActivity implements HRClient {
         stopTimer();
     }
 
+    //arek: create choose menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.hrsettings_menu, menu);
@@ -186,6 +187,8 @@ public class HRSettingsActivity extends AppCompatActivity implements HRClient {
         return true;
     }
 
+
+    //arek: take action on menu option selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -364,6 +367,8 @@ public class HRSettingsActivity extends AppCompatActivity implements HRClient {
         }
     }
 
+
+    //arek: add mock provider
     private void selectProvider() {
         final CharSequence items[] = new CharSequence[providers.size()];
         final CharSequence itemNames[] = new CharSequence[providers.size()];

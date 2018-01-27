@@ -584,6 +584,8 @@ public class StartActivity extends Activity implements TickListener, GpsInformat
         return w;
     }
 
+
+    //arek: here we are waiting for gps and start
     final OnClickListener startButtonClick = new OnClickListener() {
         public void onClick(View v) {
             if (tabHost.getCurrentTabTag().contentEquals(TAB_MANUAL)) {
